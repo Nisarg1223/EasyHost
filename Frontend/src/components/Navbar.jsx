@@ -1,21 +1,11 @@
 import React from 'react';
+import logoImage from '../assets/logo.png';
 
 const Navbar = ({ activeView, onViewChange }) => {
   return (
     <nav className="navbar">
       <div className="logo-container" onClick={() => onViewChange('login')}>
-        <svg viewBox="0 0 40 40" width="40" height="40" style={{ overflow: 'visible' }}>
-          {/* Main logo circle */}
-          <circle cx="20" cy="20" r="16" fill="#000000" />
-          
-          {/* Inner isometric stairs/squares */}
-          <rect x="11" y="21" width="6" height="6" fill="#FFFFFF" />
-          <rect x="17" y="15" width="6" height="6" fill="#FFFFFF" />
-          <rect x="23" y="9" width="6" height="6" fill="#FFFFFF" />
-          
-          {/* Tiny outer accent square */}
-          <rect x="29" y="5" width="6" height="6" fill="#000000" />
-        </svg>
+        <img src={logoImage} alt="EasyHost Logo" style={{ height: '80px', width: 'auto', objectFit: 'contain' }} />
       </div>
 
       <div className="nav-menu-wrapper">
