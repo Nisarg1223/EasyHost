@@ -1,0 +1,535 @@
+// Colors
+$color-bg-outer: #ECE9EA;
+$color-bg-card: #ECE9EA; // Clean light off-white
+$color-purple: #A66CFF;  // Vibrant purple from mockup
+$color-lime: #D4FF00;    // Bright neon lime
+$color-black: #000000;
+$color-white: #FFFFFF;
+$color-border: #ECE9EA;
+
+// Fonts
+$font-body: 'Inter', sans-serif;
+$font-display: 'Syne', sans-serif;
+$font-grotesk: 'Space Grotesk', sans-serif;
+
+// Global Resets & Body
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-body;
+  background-color: $color-bg-outer;
+  color: $color-black;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// App Shell
+.app-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: $color-bg-outer;
+  overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+}
+
+// Main Card Container (A premium desktop mockup box)
+.main-card {
+  width: 100%;
+  max-width: none;
+  min-height: calc(100vh - 80px);
+  background-color: $color-bg-card;
+  border-radius: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  @media (max-width: 1024px) {
+    min-height: calc(100vh - 60px);
+    padding: 30px;
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 0;
+    padding: 20px;
+    min-height: calc(100vh - 40px);
+  }
+}
+
+// Navbar
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 10;
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .nav-menu-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      margin-right: 48px;
+
+      @media (max-width: 768px) {
+        display: none; // Hidden on mobile, button is enough
+      }
+
+      a {
+        text-decoration: none;
+        color: $color-black;
+        font-family: $font-grotesk;
+        font-size: 16px;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 4px;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+
+    // Underline divider matching mockup
+    .nav-divider-line {
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: calc(100% - 150px);
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.15);
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+  }
+
+  .nav-btn {
+    font-family: $font-grotesk;
+    font-size: 15px;
+    font-weight: 600;
+    color: $color-black;
+    background-color: transparent;
+    border: 1px solid $color-black;
+    padding: 10px 24px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $color-black;
+      color: $color-white;
+    }
+  }
+}
+
+// Page Content Grid
+.page-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: 40px;
+  position: relative;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+// Left Illustration Panel
+.illustration-panel {
+  background-color: $color-purple;
+  flex: 1; // Much bigger width compared to the right panel
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+  height: 100%;
+
+  @media (max-width: 768px) {
+    min-height: 250px;
+    flex: none;
+  }
+}
+
+// Image Illustration
+.illustration-img {
+  // position: absolute;
+  // top: -10px; // Slight bleed upward
+  // left: -40px; // Bleed completely into the left padding
+  // width: calc(100% + 40px); // Expand to cover the left offset
+  // height: calc(100% + 50px); // Bleed completely into the bottom padding (40px + 10px buffer)
+  object-fit: cover;
+  height: 100%;
+  // object-position: center left;
+  border-radius: 0;
+}
+
+
+// Right Content/Form Panel
+.right-panel {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0;
+  position: relative;
+
+  @media (max-width: 768px) {
+    flex: none;
+    padding: 0;
+  }
+}
+
+// Landing View Elements
+.landing-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+
+  .hero-title {
+    font-family: $font-display;
+    font-size: 72px;
+    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: $color-black;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .bold-row {
+      font-weight: 800;
+    }
+
+    .light-row {
+      font-weight: 400;
+    }
+
+    @media (max-width: 1200px) {
+      font-size: 64px;
+    }
+
+    @media (max-width: 1024px) {
+      font-size: 54px;
+    }
+
+    @media (max-width: 900px) {
+      font-size: 46px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 56px;
+      margin-bottom: 40px;
+    }
+  }
+
+  .landing-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    width: 100%;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .hero-desc {
+      font-family: $font-body;
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(0, 0, 0, 0.7);
+      max-width: 290px;
+      margin-bottom: 5px;
+
+      @media (max-width: 768px) {
+        max-width: 100%;
+      }
+    }
+
+    .get-started-btn {
+      font-family: $font-grotesk;
+      font-size: 16px;
+      font-weight: 600;
+      color: $color-white;
+      background-color: $color-black;
+      border: none;
+      padding: 20px 40px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.85);
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+        text-align: center;
+        padding: 16px;
+      }
+    }
+  }
+}
+
+// Form Container with transitions
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  animation: formAppear 0.4s ease-out;
+
+  .form-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: $color-black;
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: scale(1.05);
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+        fill: $color-black;
+      }
+    }
+  }
+
+  .form-title {
+    font-family: $font-display;
+    font-size: 32px;
+    font-weight: 800;
+    color: $color-black;
+    letter-spacing: -0.01em;
+
+    @media (max-width: 1024px) {
+      font-size: 28px;
+    }
+  }
+
+  .form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+      font-family: $font-grotesk;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.8);
+    }
+
+    input {
+      font-family: $font-body;
+      font-size: 15px;
+      padding: 12px 16px;
+      border: 2px solid $color-black;
+      border-radius: 8px;
+      background-color: $color-white;
+      outline: none;
+      box-shadow: 2px 2px 0px $color-black;
+      transition: all 0.2s ease;
+
+      &::placeholder {
+        color: rgba(0, 0, 0, 0.35);
+      }
+
+      &:focus {
+        box-shadow: 4px 4px 0px $color-lime;
+        transform: translate(-2px, -2px);
+      }
+    }
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 4px;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid $color-black;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      background-color: $color-white;
+      box-shadow: 1px 1px 0px $color-black;
+      transition: all 0.15s ease;
+
+      &:checked {
+        background-color: $color-lime;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          left: 4px;
+          top: 1px;
+          width: 5px;
+          height: 9px;
+          border: solid $color-black;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+      }
+    }
+
+    label {
+      font-family: $font-body;
+      font-size: 13px;
+      line-height: 1.4;
+      color: rgba(0, 0, 0, 0.7);
+      user-select: none;
+      cursor: pointer;
+
+      a {
+        color: $color-black;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .form-submit-btn {
+    font-family: $font-grotesk;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $color-white;
+    background-color: $color-black;
+    border: 2px solid $color-black;
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px $color-black;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+
+    &:hover {
+      box-shadow: 1px 1px 0px $color-black;
+      transform: translate(2px, 2px);
+      background-color: $color-lime;
+      color: $color-black;
+    }
+
+    &:active {
+      box-shadow: 0px 0px 0px $color-black;
+      transform: translate(3px, 3px);
+    }
+  }
+
+  .form-toggle-link {
+    text-align: center;
+    margin-top: 20px;
+    font-family: $font-body;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+
+    span {
+      color: $color-black;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-left: 5px;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: $color-purple;
+      }
+    }
+  }
+}
+
+@keyframes formAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
