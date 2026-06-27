@@ -31,6 +31,141 @@
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 
+  // Preloader Screen & Reveal Animations
+  &.preloader-active {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .preloader-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background-color: #1A1A1A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.9s cubic-bezier(0.85, 0, 0.15, 1);
+    transform: translateY(0);
+
+    &.exit-up {
+      transform: translateY(-100%);
+    }
+
+    .preloader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .preloader-logo {
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      animation: preloader-logo-scale 1.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+
+      @media (min-width: 768px) {
+        height: 90px;
+      }
+    }
+
+    .preloader-text {
+      display: flex;
+      gap: 2px;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+
+      @media (min-width: 768px) {
+        font-size: 32px;
+      }
+
+      .letter {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(12px);
+        animation: preloader-letter-fade 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+
+        // Sequence letter delay loop
+        &.letter-1 { animation-delay: 0.7s; }
+        &.letter-2 { animation-delay: 0.85s; }
+        &.letter-3 { animation-delay: 1.0s; }
+        &.letter-4 { animation-delay: 1.15s; }
+        &.letter-5 { animation-delay: 1.3s; }
+        &.letter-6 { animation-delay: 1.45s; }
+        &.letter-7 { animation-delay: 1.6s; }
+        &.letter-8 { animation-delay: 1.75s; }
+      }
+    }
+  }
+
+  .home-reveal-container {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    // Initial hidden state for stagger elements
+    .hero-text-block h1,
+    .hero-text-block p,
+    .hero-ctas,
+    .metrics-container,
+    .showcase-outer {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    &.revealed {
+      opacity: 1;
+      transform: translateY(0);
+
+      // Sequenced staggered reveals
+      .hero-text-block h1 {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+
+      .hero-text-block p {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.35s;
+      }
+
+      .hero-ctas {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.5s;
+      }
+
+      .metrics-container {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.65s;
+      }
+
+      .showcase-outer {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.8s;
+      }
+    }
+  }
+
+  @keyframes preloader-logo-scale {
+    0% { transform: scale(0.65); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes preloader-letter-fade {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
   // Typography helpers
   .font-head {
     font-family: 'Archivo Black', 'Space Grotesk', sans-serif;

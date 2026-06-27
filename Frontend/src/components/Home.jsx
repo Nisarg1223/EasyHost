@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.scss';
 import brLogo from '../assets/br_logo.png';
 
@@ -273,10 +273,47 @@ const Home = ({ onViewChange }) => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  // No extra state hooks needed for the 3D perspective gallery
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [shouldRenderPreloader, setShouldRenderPreloader] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2800); // 2.8 seconds loading screen
+
+    const cleanupTimer = setTimeout(() => {
+      setShouldRenderPreloader(false);
+    }, 3800); // remove from DOM after exit animation completes
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(cleanupTimer);
+    };
+  }, []);
 
   return (
-    <div className="home-page">
+    <div className={`home-page ${isLoading ? 'preloader-active' : ''}`}>
+      {shouldRenderPreloader && (
+        <div className={`preloader-screen ${!isLoading ? 'exit-up' : ''}`}>
+          <div className="preloader-content">
+            <img src={brLogo} alt="EasyHost Logo" className="preloader-logo" />
+            <div className="preloader-text font-head">
+              <span className="letter letter-1">E</span>
+              <span className="letter letter-2">a</span>
+              <span className="letter letter-3">s</span>
+              <span className="letter letter-4">y</span>
+              <span className="letter letter-5">H</span>
+              <span className="letter letter-6">o</span>
+              <span className="letter letter-7">s</span>
+              <span className="letter letter-8">t</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Wrapper to animate reveal */}
+      <div className={`home-reveal-container ${!isLoading ? 'revealed' : ''}`}>
       {/* HEADER NAVBAR */}
       <header className="w-full">
         <div className="header-container">
@@ -1203,6 +1240,7 @@ const Home = ({ onViewChange }) => {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
