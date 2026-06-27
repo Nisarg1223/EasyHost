@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Home.scss';
+import brLogo from '../assets/br_logo.png';
 
 // SVG Icon Helpers
 const ZapIcon = () => (
@@ -269,19 +270,10 @@ const DraggableElement = ({ children, className, onClick }) => {
 
 const Home = ({ onViewChange }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [billingPeriod, setBillingPeriod] = useState('monthly'); // 'monthly' | 'yearly'
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
-  const selectBilling = (period) => {
-    setBillingPeriod(period);
-  };
-
-  // Pricing calculations
-  const getProPrice = () => (billingPeriod === 'monthly' ? '$19' : '$15');
-  const getTeamPrice = () => (billingPeriod === 'monthly' ? '$48' : '$38');
+  // No extra state hooks needed for the 3D perspective gallery
 
   return (
     <div className="home-page">
@@ -289,17 +281,11 @@ const Home = ({ onViewChange }) => {
       <header className="w-full">
         <div className="header-container">
           <a href="#" className="logo-link" onClick={(e) => { e.preventDefault(); onViewChange('home'); }}>
-            <div className="logo-icon-bg">
-              <ZapIcon />
-            </div>
-            <h6 className="logo-text font-head">DEVFORGE</h6>
+            <img src={brLogo} alt="EasyHost Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
           </a>
 
           <nav>
-            <a href="#features" className="nav-link font-sans">Features</a>
-            <a href="#developers" className="nav-link font-sans">Developers</a>
-            <a href="#pricing" className="nav-link font-sans">Pricing</a>
-            <a href="#docs" className="nav-link font-sans">Docs</a>
+            <a href="#" className="nav-link font-sans" onClick={(e) => { e.preventDefault(); onViewChange('home'); }} style={{ fontWeight: '900', letterSpacing: '0.05em' }}>EASYHOST</a>
             <a href="#signin" className="nav-link border-link font-sans" onClick={(e) => { e.preventDefault(); onViewChange('login'); }}>Sign In</a>
             <a href="#get-started" className="nav-link button-link font-sans" onClick={(e) => { e.preventDefault(); onViewChange('signup'); }}>Get Started</a>
           </nav>
@@ -312,10 +298,7 @@ const Home = ({ onViewChange }) => {
 
       {/* MOBILE MENU DROPDOWN */}
       <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
-        <a href="#features" onClick={() => setIsMobileMenuOpen(false)}>Features</a>
-        <a href="#developers" onClick={() => setIsMobileMenuOpen(false)}>Developers</a>
-        <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
-        <a href="#docs" onClick={() => setIsMobileMenuOpen(false)}>Docs</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); onViewChange('home'); }} style={{ fontWeight: '900' }}>EASYHOST</a>
         <a href="#signin" className="highlight" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); onViewChange('login'); }}>Sign In</a>
         <a href="#get-started" className="highlight" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); onViewChange('signup'); }}>Get Started</a>
       </div>
@@ -352,10 +335,10 @@ const Home = ({ onViewChange }) => {
           <div className="hero-content">
             <div className="hero-text-block">
               <h1 className="font-head">
-                BUILD DEBUG<br />DEPLOY <span className="text-secondary">FASTER</span>
+                SIMPLE SECURE<br />WEBSITE <span className="text-secondary">HOSTING</span>
               </h1>
               <p className="font-sans">
-                The all-in-one developer platform for real-time debugging, performance monitoring, and seamless collaboration.
+                EasyHost is a modern, developer-friendly web hosting platform designed to make deploying websites and web applications as simple as possible.
               </p>
             </div>
 
@@ -365,7 +348,7 @@ const Home = ({ onViewChange }) => {
                   <span className="retro-btn__layer retro-btn__layer--bottom"></span>
                   <span className="retro-btn__layer retro-btn__layer--middle"></span>
                   <span className="retro-btn__layer retro-btn__layer--top">
-                    START BUILDING <ArrowRightIcon />
+                    START DEPLOYING <ArrowRightIcon />
                   </span>
                 </div>
               </button>
@@ -383,12 +366,12 @@ const Home = ({ onViewChange }) => {
                 <p>AVG LATENCY</p>
               </div>
               <div className="metric-item">
-                <h4>40%</h4>
-                <p>FASTER DEPLOYS</p>
+                <h4>1-CLICK</h4>
+                <p>EASY DEPLOYS</p>
               </div>
               <div className="metric-item">
-                <h4>10K+</h4>
-                <p>DEVELOPERS</p>
+                <h4>50K+</h4>
+                <p>HOSTED PROJECTS</p>
               </div>
             </div>
 
@@ -410,7 +393,7 @@ const Home = ({ onViewChange }) => {
                         <div className="dot green"></div>
                       </div>
                       <div className="path-url">
-                        <p>devforge.app/dashboard</p>
+                        <p>easyhost.app/dashboard</p>
                       </div>
                     </div>
 
@@ -423,11 +406,11 @@ const Home = ({ onViewChange }) => {
                             Terminal
                           </div>
                           <div>
-                            <p className="log-line" style={{ color: '#00ff88' }}>$ devforge deploy --production</p>
-                            <p className="log-line" style={{ color: '#888888' }}>Compiling 847 modules...</p>
-                            <p className="log-line" style={{ color: '#818cf8' }}>Bundling assets [=========&gt;] 100%</p>
-                            <p className="log-line" style={{ color: '#00ff88' }}>Running health checks... passed</p>
-                            <p className="log-line" style={{ color: '#00d4ff' }}>Deployed to edge in 2.4s</p>
+                            <p className="log-line" style={{ color: '#00ff88' }}>$ easyhost deploy --production</p>
+                            <p className="log-line" style={{ color: '#888888' }}>✓ Auto-detecting stack... React detected</p>
+                            <p className="log-line" style={{ color: '#818cf8' }}>✓ Bundling assets & optimizing bundle</p>
+                            <p className="log-line" style={{ color: '#00ff88' }}>✓ Uploading build... 100% success</p>
+                            <p className="log-line" style={{ color: '#00d4ff' }}>✓ Live preview ready in 1.8s!</p>
                           </div>
                         </div>
 
@@ -573,9 +556,9 @@ const Home = ({ onViewChange }) => {
           <div className="section-header">
             <span className="badge cyan font-sans">Features</span>
             <h2 className="font-head">
-              Everything you need to<br /><span className="highlight">ship with confidence</span>
+              Everything you need to<br /><span className="highlight">deploy with confidence</span>
             </h2>
-            <p className="sub font-sans">A complete toolkit for modern dev teams who refuse to compromise.</p>
+            <p className="sub font-sans">A complete toolkit for static and dynamic web apps who demand simplicity and speed.</p>
           </div>
 
           <div className="features-list-wrapper">
@@ -589,8 +572,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-red)' }}>
                     <CircleAlertIcon />
                   </div>
-                  <h3 className="font-sans">REAL-TIME ERROR TRACKING</h3>
-                  <p className="font-sans text-muted">Catch and diagnose errors the instant they occur with full stack traces and source maps.</p>
+                  <h3 className="font-sans">1-CLICK DEPLOYMENTS</h3>
+                  <p className="font-sans text-muted">Upload project files or sync Git repositories to publish static and dynamic websites instantly.</p>
                 </div>
               </div>
 
@@ -602,8 +585,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-green)' }}>
                     <ChartColumnIcon />
                   </div>
-                  <h3 className="font-sans">PERFORMANCE MONITORING</h3>
-                  <p className="font-sans text-muted">Track Core Web Vitals, response times, and throughput with anomaly detection.</p>
+                  <h3 className="font-sans">WEBSITE ANALYTICS</h3>
+                  <p className="font-sans text-muted">Monitor traffic metrics, response speed, server resource limits, and global uptime stats.</p>
                 </div>
               </div>
 
@@ -615,8 +598,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-purple)' }}>
                     <LayoutDashboardIcon />
                   </div>
-                  <h3 className="font-sans">API INSPECTOR</h3>
-                  <p className="font-sans text-muted">Debug HTTP requests, inspect payloads, and replay failed calls with one click.</p>
+                  <h3 className="font-sans">VERSION PREVIEWS</h3>
+                  <p className="font-sans text-muted">Inspect active builds, preview staging previews, and roll back deployment states instantly.</p>
                 </div>
               </div>
 
@@ -628,8 +611,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-blue)' }}>
                     <WorkflowIcon />
                   </div>
-                  <h3 className="font-sans">CUSTOMIZABLE DASHBOARDS</h3>
-                  <p className="font-sans text-muted">Run unit, integration, and E2E tests directly from your dashboard in parallel.</p>
+                  <h3 className="font-sans">SECURE CREDENTIALS</h3>
+                  <p className="font-sans text-muted">Protect environments variables, encrypt configuration secrets, and define user access rules.</p>
                 </div>
               </div>
             </div>
@@ -644,8 +627,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-yellow)' }}>
                     <MessageSquareMoreIcon />
                   </div>
-                  <h3 className="font-sans">LIVE COLLABORATION</h3>
-                  <p className="font-sans text-muted">Debug together in real time. Share sessions, annotate issues, and pair program.</p>
+                  <h3 className="font-sans">SSL &amp; SECURE HTTPS</h3>
+                  <p className="font-sans text-muted">Automatic free SSL certificate generations and secure redirects on every new custom domain.</p>
                 </div>
               </div>
 
@@ -657,8 +640,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-yellow)' }}>
                     <ShieldCheckIcon />
                   </div>
-                  <h3 className="font-sans">SECURE ENVIRONMENTS</h3>
-                  <p className="font-sans text-muted">Isolated sandboxes with encrypted secrets, role-based access, and SOC 2 compliance.</p>
+                  <h3 className="font-sans">COLLABORATOR TEAMS</h3>
+                  <p className="font-sans text-muted">Invite team members to edit build pipelines and manage multiple server configurations together.</p>
                 </div>
               </div>
 
@@ -670,8 +653,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-yellow)' }}>
                     <PlugIcon />
                   </div>
-                  <h3 className="font-sans">EDGE COMPUTE</h3>
-                  <p className="font-sans text-muted">Deploy debugging agents to 200+ edge locations for zero-latency monitoring.</p>
+                  <h3 className="font-sans">CONTINUOUS GIT CD</h3>
+                  <p className="font-sans text-muted">Automatically triggers a build pipeline and routes traffic on every single Git push.</p>
                 </div>
               </div>
 
@@ -683,8 +666,8 @@ const Home = ({ onViewChange }) => {
                   <div className="card-icon-box" style={{ backgroundColor: 'var(--accent-yellow)' }}>
                     <GitBranchIcon />
                   </div>
-                  <h3 className="font-sans">GIT INTEGRATION</h3>
-                  <p className="font-sans text-muted">Auto-link errors to commits, create branches from bugs, and track regressions.</p>
+                  <h3 className="font-sans">CUSTOM DOMAINS</h3>
+                  <p className="font-sans text-muted">Route custom domains seamlessly with instant DNS verification templates.</p>
                 </div>
               </div>
             </div>
@@ -696,9 +679,9 @@ const Home = ({ onViewChange }) => {
           <div className="section-header">
             <span className="badge purple font-sans">Developer Experience</span>
             <h2 className="font-head">
-              Three lines of code<br /><span className="highlight-purple">Infinite visibility</span>
+              Connect Git repositories<br /><span className="highlight-purple">Automatic deployment</span>
             </h2>
-            <p className="sub font-sans">This section is set up so you can swap in a real screenshot later. For now, it uses a placeholder image to preserve layout and spacing.</p>
+            <p className="sub font-sans">Connect your GitHub, GitLab, or Bitbucket. EasyHost auto-detects your workspace stack and builds everything automatically on every git push.</p>
           </div>
 
           <div className="placeholder-image-container">
@@ -723,7 +706,7 @@ const Home = ({ onViewChange }) => {
               <div className="card-main-content">
                 <div className="avatar-circle">D</div>
                 <p className="quote-text font-sans">
-                  "DevForge replaced three separate tools in our stack. The real-time error tracking alone saves our team hours every week."
+                  "EasyHost replaced three separate tools in our stack. The automatic Git deployments and real-time previews save our team hours of setup every week."
                 </p>
                 <div className="author-info">
                   <h5 className="font-head">David Brown</h5>
@@ -746,7 +729,7 @@ const Home = ({ onViewChange }) => {
               <div className="card-main-content">
                 <div className="avatar-circle" style={{ backgroundColor: '#38bdf8' }}>S</div>
                 <p className="quote-text font-sans">
-                  "Switching to DevForge streamlined our workflow. The integration capabilities have significantly enhanced our team's productivity."
+                  "Switching to EasyHost streamlined our deployment workflow. The automatic domain binding and SSL setup have significantly simplified our hosting."
                 </p>
                 <div className="author-info">
                   <h5 className="font-head">Sarah Johnson</h5>
@@ -769,7 +752,7 @@ const Home = ({ onViewChange }) => {
               <div className="card-main-content">
                 <div className="avatar-circle" style={{ backgroundColor: '#e63946' }}>M</div>
                 <p className="quote-text font-sans">
-                  "With DevForge, we can easily collaborate across departments. The analytics dashboard is a game changer for project insights."
+                  "With EasyHost, we can easily invite collaborators and share staging previews. The analytics dashboards are a complete game changer for traffic insights."
                 </p>
                 <div className="author-info">
                   <h5 className="font-head">Michael Lee</h5>
@@ -792,9 +775,9 @@ const Home = ({ onViewChange }) => {
           <div className="section-header">
             <span className="badge yellow font-sans">How It Works</span>
             <h2 className="font-head">
-              From setup to shipping<br /><span className="highlight-yellow">in minutes</span>
+              From setup to hosting<br /><span className="highlight-yellow">in minutes</span>
             </h2>
-            <p className="sub font-sans">Three simple steps to transform your development workflow.</p>
+            <p className="sub font-sans">Three simple steps to deploy and manage your web projects.</p>
           </div>
 
           <div className="how-it-works-grid">
@@ -807,7 +790,7 @@ const Home = ({ onViewChange }) => {
                 <div className="step-text">
                   <p className="step-num color-01 font-sans">STEP 01</p>
                   <h3 className="font-sans">CONNECT YOUR REPO</h3>
-                  <p className="font-sans">Link your GitHub, GitLab, or Bitbucket repository. DevForge auto-detects your stack and configures monitoring.</p>
+                  <p className="font-sans">Link your GitHub, GitLab, or Bitbucket repository. EasyHost automatically detects your framework stack and configures your optimal build configurations.</p>
                 </div>
               </div>
 
@@ -818,8 +801,8 @@ const Home = ({ onViewChange }) => {
                 </div>
                 <div className="step-text">
                   <p className="step-num color-02 font-sans">STEP 02</p>
-                  <h3 className="font-sans">MONITOR IN REAL TIME</h3>
-                  <p className="font-sans">Get instant visibility into errors, performance metrics, and API calls. Set up alerts and track everything.</p>
+                  <h3 className="font-sans">MONITOR &amp; PREVIEW</h3>
+                  <p className="font-sans">Configure environment variables, bind custom domains, and inspect live preview links. Adjust team settings with role permissions.</p>
                 </div>
               </div>
 
@@ -830,8 +813,8 @@ const Home = ({ onViewChange }) => {
                 </div>
                 <div className="step-text">
                   <p className="step-num color-03 font-sans">STEP 03</p>
-                  <h3 className="font-sans">SHIP WITH CONFIDENCE</h3>
-                  <p className="font-sans">Deploy knowing every edge case is covered. Automated testing, canary deployments, and instant rollbacks.</p>
+                  <h3 className="font-sans">SHIP &amp; SCALE</h3>
+                  <p className="font-sans">Publish instantly. Use build rollbacks to undo any deployment mistakes. Review traffic counts, response speeds, and uptime with live analytics.</p>
                 </div>
               </div>
             </div>
@@ -842,141 +825,179 @@ const Home = ({ onViewChange }) => {
           </div>
         </section>
 
-        {/* PRICING SECTION */}
-        <section id="pricing" className="pricing-section">
-          <div className="section-header">
-            <span className="badge red font-sans">Pricing</span>
-            <h2 className="font-head">
-              Simple, transparent <span className="highlight-red">pricing</span>
-            </h2>
-            <p className="sub font-sans">Start free. Scale as you grow. No hidden fees.</p>
-          </div>
-
-          <div className="pricing-toggle-container">
-            <div className="pricing-toggle-grid">
-              <div className={`slider-bg ${billingPeriod === 'yearly' ? 'yearly-active' : ''}`}></div>
-              <button 
-                className={`font-sans ${billingPeriod === 'monthly' ? 'active' : 'inactive'}`}
-                onClick={() => selectBilling('monthly')}
-              >
-                MONTHLY
-              </button>
-              <button 
-                className={`font-sans ${billingPeriod === 'yearly' ? 'active' : 'inactive'}`}
-                onClick={() => selectBilling('yearly')}
-              >
-                YEARLY
-                <span className="discount-badge">-20%</span>
-              </button>
+        {/* INTERACTIVE 3D PERSPECTIVE GALLERY */}
+        <section id="perspective-gallery" className="gallery-section">
+          
+          {/* Top Ticker Marquee */}
+          <div className="gallery-ticker font-sans">
+            <div className="ticker-inner">
+              <span>DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • </span>
+              <span>DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • DEPLOY INSTANTLY • AUTOMATIC CD • BUILT FOR PERFORMANCE • </span>
             </div>
           </div>
 
-          <div className="pricing-cards-container">
-            {/* Starter Plan */}
-            <div className="pricing-card-wrapper">
-              <div className="card-shadow-bottom" style={{ backgroundColor: 'var(--foreground)' }}></div>
-              <div className="card-shadow-middle"></div>
-              <div className="pricing-card-main">
-                <div className="card-top-accent" style={{ backgroundColor: 'var(--foreground)' }}></div>
-                <div className="pricing-card-body">
-                  <h5 className="font-head">STARTER</h5>
-                  <p className="desc font-sans">For indie developers and side projects.</p>
-                  <div className="price-box">
-                    <span className="price font-head">$0</span>
-                    <span className="period font-sans">/mo</span>
+          {/* Section Navbar Header */}
+          <div className="gallery-navbar font-sans">
+            <div className="nav-item">CONSOLE</div>
+            <div className="nav-item active">DEPLOYER</div>
+            <div className="nav-item">METRICS</div>
+            <div className="nav-item">NETWORK</div>
+            <div className="nav-item">SUPPORT</div>
+          </div>
+
+          <div className="gallery-main-container">
+            {/* Oli Studio Brand Header */}
+            <div className="gallery-brand">
+              <svg viewBox="0 0 100 100" className="brand-cube-icon">
+                <path d="M50 15 L80 32 L80 68 L50 85 L20 68 L20 32 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+                <path d="M50 15 L50 85" stroke="currentColor" strokeWidth="4" />
+                <path d="M20 32 L50 50 L80 32" fill="none" stroke="currentColor" strokeWidth="4" />
+                <circle cx="50" cy="50" r="10" fill="currentColor" />
+              </svg>
+              <div className="brand-name font-head">Oli Studio <span className="brand-sub">Deployer</span></div>
+            </div>
+
+            {/* 3D Curved Perspective Cylinder Carousel */}
+            <div className="perspective-cylinder-wrapper">
+              <div className="cylinder-carousel">
+                
+                {/* Card 1: Git Push (Yellow) */}
+                <div className="card-3d card-3d-1 theme-yellow">
+                  <div className="card-inner-graphic">
+                    <div className="terminal-bar">
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                    </div>
+                    <div className="terminal-body font-sans">
+                      <p className="cmd">&gt; git push easyhost</p>
+                      <p className="output green">✓ Build Success</p>
+                      <p className="output">✓ Pushing to edge...</p>
+                    </div>
+                    <div className="bold-badge font-head">GIT PUSH</div>
                   </div>
-                  <button className="pricing-btn font-head" onClick={() => onViewChange('signup')}>GET STARTED</button>
-                  <ul className="features-list font-sans">
-                    <li><CheckIcon color="var(--foreground)" /> Up to 3 projects</li>
-                    <li><CheckIcon color="var(--foreground)" /> 10k events/month</li>
-                    <li><CheckIcon color="var(--foreground)" /> Basic error tracking</li>
-                    <li><CheckIcon color="var(--foreground)" /> 7-day data retention</li>
-                    <li><CheckIcon color="var(--foreground)" /> Community support</li>
-                  </ul>
                 </div>
+
+                {/* Card 2: CDN (Blue) */}
+                <div className="card-3d card-3d-2 theme-blue">
+                  <div className="card-inner-graphic">
+                    <svg viewBox="0 0 100 100" className="icon-svg">
+                      <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <path d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" strokeWidth="4" />
+                      <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <ellipse cx="50" cy="50" rx="15" ry="40" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <circle cx="50" cy="50" r="6" fill="var(--primary)" />
+                      <circle cx="20" cy="50" r="5" fill="var(--accent-red)" />
+                      <circle cx="80" cy="50" r="5" fill="var(--accent-red)" />
+                    </svg>
+                    <div className="bold-badge font-head">EDGE CDN</div>
+                  </div>
+                </div>
+
+                {/* Card 3: SSL Certificate (Pink) */}
+                <div className="card-3d card-3d-3 theme-pink">
+                  <div className="card-inner-graphic">
+                    <svg viewBox="0 0 100 100" className="icon-svg">
+                      <rect x="25" y="45" width="50" height="40" rx="5" fill="none" stroke="currentColor" strokeWidth="5" />
+                      <path d="M35 45 V30 a15 15 0 0 1 30 0 v15" fill="none" stroke="currentColor" strokeWidth="5" />
+                      <circle cx="50" cy="65" r="6" fill="currentColor" />
+                    </svg>
+                    <div className="badge-tag green font-sans">100% SECURE</div>
+                    <div className="bold-badge font-head">FREE SSL</div>
+                  </div>
+                </div>
+
+                {/* Card 4: Auto Scaling (Green) */}
+                <div className="card-3d card-3d-4 theme-green">
+                  <div className="card-inner-graphic">
+                    <svg viewBox="0 0 100 100" className="icon-svg">
+                      <path d="M10 80 L30 60 L50 70 L70 30 L90 40" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
+                      <line x1="10" y1="90" x2="10" y2="10" stroke="currentColor" strokeWidth="3" />
+                      <line x1="10" y1="90" x2="90" y2="90" stroke="currentColor" strokeWidth="3" />
+                      <circle cx="70" cy="30" r="5" fill="currentColor" />
+                      <path d="M70 15 L70 30 L85 30" fill="none" stroke="currentColor" strokeWidth="3" />
+                    </svg>
+                    <div className="bold-badge font-head">AUTO SCALE</div>
+                  </div>
+                </div>
+
+                {/* Card 5: Databases (Purple) */}
+                <div className="card-3d card-3d-5 theme-purple">
+                  <div className="card-inner-graphic">
+                    <svg viewBox="0 0 100 100" className="icon-svg">
+                      <ellipse cx="50" cy="25" rx="25" ry="10" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <path d="M25 25 V45 A25 10 0 0 0 75 45 V25" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <path d="M25 45 V65 A25 10 0 0 0 75 65 V45" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <path d="M25 65 V85 A25 10 0 0 0 75 85 V65" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <ellipse cx="50" cy="45" rx="25" ry="10" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <ellipse cx="50" cy="65" rx="25" ry="10" fill="none" stroke="currentColor" strokeWidth="4" />
+                    </svg>
+                    <div className="bold-badge font-head">DATABASES</div>
+                  </div>
+                </div>
+
+                {/* Card 6: Domains (Orange) */}
+                <div className="card-3d card-3d-6 theme-orange">
+                  <div className="card-inner-graphic">
+                    <div className="browser-mockup">
+                      <div className="browser-bar">
+                        <span className="dot"></span>
+                        <span className="domain-text">yoursite.com</span>
+                      </div>
+                      <div className="browser-page">
+                        <div className="line"></div>
+                        <div className="line short"></div>
+                        <div className="big-check font-head">✓</div>
+                      </div>
+                    </div>
+                    <div className="bold-badge font-head">DOMAINS</div>
+                  </div>
+                </div>
+
+                {/* Card 7: Live Metrics (Cyan) */}
+                <div className="card-3d card-3d-7 theme-cyan">
+                  <div className="card-inner-graphic">
+                    <svg viewBox="0 0 100 100" className="icon-svg">
+                      <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="4" />
+                      <path d="M15 50 A 35 35 0 0 1 85 50" fill="none" stroke="var(--primary)" strokeWidth="6" strokeDasharray="110" strokeDashoffset="30" />
+                      <line x1="50" y1="50" x2="65" y2="25" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
+                      <circle cx="50" cy="50" r="5" fill="currentColor" />
+                    </svg>
+                    <div className="bold-badge font-head">ANALYTICS</div>
+                  </div>
+                </div>
+
+                {/* Card 8: System Reset (Lavender) */}
+                <div className="card-3d card-3d-8 theme-lavender">
+                  <div className="card-inner-graphic">
+                    <div className="keyboard-key font-head">
+                      <div className="key-cap">RESET</div>
+                    </div>
+                    <svg viewBox="0 0 100 100" className="icon-svg rotate-arrow">
+                      <path d="M30 50 A20 20 0 1 1 50 70 M50 85 L50 70 L65 70" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <div className="bold-badge font-head">FAILOVER</div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            {/* Pro Plan */}
-            <div className="pricing-card-wrapper">
-              <div className="card-shadow-bottom" style={{ backgroundColor: 'var(--accent-red)' }}></div>
-              <div className="card-shadow-middle"></div>
-              <div className="pricing-card-main">
-                <span className="popular-badge font-head">Most Popular</span>
-                <div className="pricing-card-body">
-                  <h5 className="font-head">PRO</h5>
-                  <p className="desc font-sans">For growing teams shipping production software.</p>
-                  <div className="price-box">
-                    <span className="price font-head">{getProPrice()}</span>
-                    <span className="period font-sans">/mo</span>
-                  </div>
-                  <button className="pricing-btn btn-popular font-head" onClick={() => onViewChange('signup')}>START FREE TRIAL</button>
-                  <ul className="features-list font-sans">
-                    <li><CheckIcon color="var(--accent-red)" /> Unlimited projects</li>
-                    <li><CheckIcon color="var(--accent-red)" /> 500k events/month</li>
-                    <li><CheckIcon color="var(--accent-red)" /> Advanced error tracking</li>
-                    <li><CheckIcon color="var(--accent-red)" /> Performance monitoring</li>
-                    <li><CheckIcon color="var(--accent-red)" /> API Inspector</li>
-                    <li><CheckIcon color="var(--accent-red)" /> Live collaboration</li>
-                    <li><CheckIcon color="var(--accent-red)" /> 30-day data retention</li>
-                    <li><CheckIcon color="var(--accent-red)" /> Priority support</li>
-                  </ul>
-                </div>
+            {/* Description & CTAs */}
+            <div className="gallery-content font-sans">
+              <p className="gallery-desc">
+                Bring your websites to life with instant neobrutalist cloud deployments. Experience flawless consistency, perfect optimization, and impeccable speed in every single built frame.
+              </p>
+              <div className="gallery-actions">
+                <button className="gallery-btn primary font-sans" onClick={() => onViewChange('signup')}>
+                  Get Started Now
+                </button>
+                <button className="gallery-btn outline font-sans">
+                  Case studies
+                </button>
               </div>
             </div>
 
-            {/* Team Plan */}
-            <div className="pricing-card-wrapper">
-              <div className="card-shadow-bottom" style={{ backgroundColor: 'var(--accent-yellow)' }}></div>
-              <div className="card-shadow-middle"></div>
-              <div className="pricing-card-main">
-                <div className="card-top-accent" style={{ backgroundColor: 'var(--accent-yellow)' }}></div>
-                <div className="pricing-card-body">
-                  <h5 className="font-head">TEAM</h5>
-                  <p className="desc font-sans">For larger teams with advanced needs.</p>
-                  <div className="price-box">
-                    <span className="price font-head">{getTeamPrice()}</span>
-                    <span className="period font-sans">/mo</span>
-                  </div>
-                  <button className="pricing-btn font-head" onClick={() => onViewChange('signup')}>START FREE TRIAL</button>
-                  <ul className="features-list font-sans">
-                    <li><CheckIcon color="var(--accent-yellow)" /> Everything in Pro</li>
-                    <li><CheckIcon color="var(--accent-yellow)" /> 5M events/month</li>
-                    <li><CheckIcon color="var(--accent-yellow)" /> Integrated testing</li>
-                    <li><CheckIcon color="var(--accent-yellow)" /> Custom dashboards</li>
-                    <li><CheckIcon color="var(--accent-yellow)" /> SSO & SAML</li>
-                    <li><CheckIcon color="var(--accent-yellow)" /> 90-day data retention</li>
-                    <li><CheckIcon color="var(--accent-yellow)" /> Dedicated support</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="pricing-card-wrapper">
-              <div className="card-shadow-bottom" style={{ backgroundColor: 'var(--accent-green)' }}></div>
-              <div className="card-shadow-middle"></div>
-              <div className="pricing-card-main">
-                <div className="card-top-accent" style={{ backgroundColor: 'var(--accent-green)' }}></div>
-                <div className="pricing-card-body">
-                  <h5 className="font-head">ENTERPRISE</h5>
-                  <p className="desc font-sans">Custom solutions for large organizations.</p>
-                  <div className="price-box">
-                    <span className="price font-head">CUSTOM</span>
-                  </div>
-                  <button className="pricing-btn font-head">CONTACT SALES</button>
-                  <ul className="features-list font-sans">
-                    <li><CheckIcon color="var(--accent-green)" /> Everything in Team</li>
-                    <li><CheckIcon color="var(--accent-green)" /> Unlimited events</li>
-                    <li><CheckIcon color="var(--accent-green)" /> Custom integrations</li>
-                    <li><CheckIcon color="var(--accent-green)" /> SOC 2 compliance</li>
-                    <li><CheckIcon color="var(--accent-green)" /> Unlimited retention</li>
-                    <li><CheckIcon color="var(--accent-green)" /> Dedicated engineer</li>
-                    <li><CheckIcon color="var(--accent-green)" /> Custom SLA</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -1003,7 +1024,7 @@ const Home = ({ onViewChange }) => {
               {/* Main inner block */}
               <div className="cta-main-content">
                 <h1 className="font-head">
-                  READY TO BUILD<br /><span className="cta-pink-highlight">SOMETHING GREAT?</span>
+                  READY TO HOST<br /><span className="cta-pink-highlight">YOUR PROJECTS?</span>
                 </h1>
                 <div className="cta-buttons">
                   <button className="retro-btn btn-cta-pink" onClick={() => onViewChange('signup')}>
@@ -1011,7 +1032,7 @@ const Home = ({ onViewChange }) => {
                       <span className="retro-btn__layer retro-btn__layer--bottom"></span>
                       <span className="retro-btn__layer retro-btn__layer--middle"></span>
                       <span className="retro-btn__layer retro-btn__layer--top">
-                        START BUILDING FOR FREE <ArrowRightIcon />
+                        START HOSTING FOR FREE <ArrowRightIcon />
                       </span>
                     </div>
                   </button>
