@@ -3,9 +3,14 @@ import Navbar from './components/Navbar';
 import Illustration from './components/Illustration';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
+import Home from './components/Home';
 
 const App = () => {
-  const [view, setView] = useState('login'); // 'login' | 'signup'
+  const [view, setView] = useState('home'); // 'home' | 'login' | 'signup'
+
+  if (view === 'home') {
+    return <Home onViewChange={setView} />;
+  }
 
   return (
     <div className="app-wrapper">

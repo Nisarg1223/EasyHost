@@ -4,7 +4,7 @@ import logoImage from '../assets/logo.png';
 const Navbar = ({ activeView, onViewChange }) => {
   return (
     <nav className="navbar">
-      <div className="logo-container" onClick={() => onViewChange('login')}>
+      <div className="logo-container" onClick={() => onViewChange('home')}>
         <img src={logoImage} alt="EasyHost Logo" style={{ height: '80px', width: 'auto', objectFit: 'contain' }} />
       </div>
 
@@ -12,7 +12,7 @@ const Navbar = ({ activeView, onViewChange }) => {
         <div className="nav-links">
           <a 
             href="#home" 
-            onClick={(e) => { e.preventDefault(); onViewChange('login'); }}
+            onClick={(e) => { e.preventDefault(); onViewChange('home'); }}
             style={{ fontSize: '22px', fontWeight: '800', textTransform: 'none' }}
           >
             EasyHost

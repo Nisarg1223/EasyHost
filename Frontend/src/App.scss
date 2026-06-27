@@ -23,13 +23,10 @@ $font-grotesk: 'Space Grotesk', sans-serif;
 
 body {
   font-family: $font-body;
-  background-color: $color-bg-outer;
+  background-color: #1a1a1a;
   color: $color-black;
   min-height: 100vh;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow-x: hidden;
   overflow-y: auto;
 }
