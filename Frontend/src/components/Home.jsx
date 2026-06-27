@@ -146,6 +146,127 @@ const RocketIcon = () => (
   </svg>
 );
 
+const DraggableElement = ({ children, className, onClick }) => {
+  const [position, setPosition] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [originalPosition, setOriginalPosition] = useState({ top: 0, left: 0 });
+  const elementRef = React.useRef(null);
+  const hasMovedRef = React.useRef(false);
+
+  const handleStart = (clientX, clientY) => {
+    setIsDragging(true);
+    setDragStart({ x: clientX, y: clientY });
+    hasMovedRef.current = false;
+    
+    if (elementRef.current) {
+      const rect = elementRef.current.getBoundingClientRect();
+      const parentRect = elementRef.current.offsetParent.getBoundingClientRect();
+      setOriginalPosition({
+        top: rect.top - parentRect.top,
+        left: rect.left - parentRect.left
+      });
+    }
+  };
+
+  const handleMove = (clientX, clientY) => {
+    if (!isDragging) return;
+    const deltaX = clientX - dragStart.x;
+    const deltaY = clientY - dragStart.y;
+    
+    if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
+      hasMovedRef.current = true;
+    }
+    
+    setPosition({
+      top: `${originalPosition.top + deltaY}px`,
+      left: `${originalPosition.left + deltaX}px`
+    });
+  };
+
+  const handleEnd = () => {
+    setIsDragging(false);
+  };
+
+  const onMouseDown = (e) => {
+    if (e.button !== 0) return; // only left click
+    handleStart(e.clientX, e.clientY);
+    e.preventDefault();
+  };
+
+  const onTouchStart = (e) => {
+    if (e.touches.length > 0) {
+      handleStart(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+
+  React.useEffect(() => {
+    const onMouseMove = (e) => {
+      if (isDragging) {
+        handleMove(e.clientX, e.clientY);
+      }
+    };
+
+    const onTouchMove = (e) => {
+      if (isDragging && e.touches.length > 0) {
+        handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const onMouseUp = () => handleEnd();
+    const onTouchEnd = () => handleEnd();
+
+    if (isDragging) {
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+      window.addEventListener('touchmove', onTouchMove);
+      window.addEventListener('touchend', onTouchEnd);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [isDragging, dragStart, originalPosition]);
+
+  const inlineStyle = {
+    cursor: isDragging ? 'grabbing' : 'grab',
+    userSelect: 'none',
+    touchAction: 'none',
+    zIndex: isDragging ? 100 : 5,
+  };
+
+  if (position) {
+    inlineStyle.position = 'absolute';
+    inlineStyle.top = position.top;
+    inlineStyle.left = position.left;
+    inlineStyle.right = 'auto';
+    inlineStyle.bottom = 'auto';
+  }
+
+  const handleMouseUpOrTouchEnd = (e) => {
+    if (!hasMovedRef.current && onClick) {
+      onClick(e);
+    }
+  };
+
+  return (
+    <div
+      ref={elementRef}
+      className={className}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+      onMouseUp={handleMouseUpOrTouchEnd}
+      onTouchEnd={handleMouseUpOrTouchEnd}
+      style={inlineStyle}
+    >
+      {children}
+    </div>
+  );
+};
+
 const Home = ({ onViewChange }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [billingPeriod, setBillingPeriod] = useState('monthly'); // 'monthly' | 'yearly'
@@ -922,67 +1043,143 @@ const Home = ({ onViewChange }) => {
         </section>
       </main>
 
-      {/* FOOTER */}
-      <footer>
-        <div className="footer-top-grid">
-          {/* Col 1 */}
-          <div className="footer-col border-col-r">
-            <h1 className="footer-brand font-head">Dev<br />Forge</h1>
-            <div className="footer-badge-line"></div>
-            <div className="footer-desc-box">
-              <div className="vert-bar"></div>
-              <p className="font-sans">
-                The all-in-one DevTools<br />platform for modern teams.
-              </p>
+      {/* PINTEREST-STYLE RETRO FOOTER */}
+      <footer className="pinterest-footer">
+        {/* Top Grid Area (Light grey background with drafting grid lines) */}
+        <div className="footer-grid-preview">
+          
+          {/* Overlapping browser windows (Left) */}
+          <DraggableElement className="retro-elements retro-windows-stack">
+            <div className="win win-red"></div>
+            <div className="win win-green"></div>
+            <div className="win win-yellow">
+              <div className="win-header">
+                <div className="win-dots">
+                  <span className="dot-x"></span>
+                  <span className="dot-x"></span>
+                  <span className="dot-x"></span>
+                </div>
+                <div className="win-title">site.html</div>
+              </div>
+              <div className="win-content">
+                <div className="win-mock-code">
+                  <span className="c-blue">&lt;h1&gt;</span>Hello World<span className="c-blue">&lt;/h1&gt;</span>
+                </div>
+              </div>
+            </div>
+          </DraggableElement>
+
+          {/* Blue Globe (Top Left-Center) */}
+          <DraggableElement className="retro-elements retro-globe-container">
+            <svg viewBox="0 0 100 100" className="wireframe-globe">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2.5" />
+              <ellipse cx="50" cy="50" rx="45" ry="15" fill="none" stroke="currentColor" strokeWidth="2.5" />
+              <ellipse cx="50" cy="50" rx="15" ry="45" fill="none" stroke="currentColor" strokeWidth="2.5" />
+              <line x1="5" y1="50" x2="95" y2="50" stroke="currentColor" strokeWidth="2.5" />
+              <line x1="50" y1="5" x2="50" y2="95" stroke="currentColor" strokeWidth="2.5" />
+            </svg>
+          </DraggableElement>
+
+          {/* Centered Retro Computer - Kept static */}
+          <div className="retro-computer-wrapper">
+            <div className="retro-computer">
+              <div className="computer-monitor">
+                <div className="screen-bezel">
+                  <div className="screen-glass">
+                    <div className="terminal-text cursor-blink">&lt; easyhost _ &gt;</div>
+                    <div className="terminal-sub">deploy: ready</div>
+                    <div className="terminal-success">SUCCESS</div>
+                  </div>
+                  <div className="bezel-badge"></div>
+                </div>
+              </div>
+              <div className="computer-base">
+                <div className="floppy-drive">
+                  <div className="drive-line"></div>
+                  <div className="drive-button"></div>
+                </div>
+                <div className="vents">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+              <div className="computer-keyboard">
+                <div className="keys-grid"></div>
+              </div>
             </div>
           </div>
 
-          {/* Col 2 */}
-          <div className="footer-col border-col-r">
-            <h5 className="footer-col-header font-head">Index</h5>
-            <div className="footer-links-list">
-              <a href="#" className="footer-link-item font-sans">
-                <p>RETROUI</p>
-                <ArrowUpRightIcon />
-              </a>
-              <a href="#" className="footer-link-item font-sans">
-                <p>COMMERCN</p>
-                <ArrowUpRightIcon />
-              </a>
-              <a href="#" className="footer-link-item font-sans">
-                <p>TANSTACK KIT</p>
-                <ArrowUpRightIcon />
-              </a>
-              <a href="#" className="footer-link-item font-sans">
-                <p>BLOG</p>
-                <ArrowUpRightIcon />
-              </a>
-            </div>
-          </div>
+          {/* Retro Deploy Arrow Button (Mid Left-Bottom) */}
+          <DraggableElement className="retro-elements retro-deploy-btn" onClick={() => onViewChange('signup')}>
+            <span className="arrow-text">DEPLOY</span>
+            <span className="arrow-icon">→</span>
+          </DraggableElement>
 
-          {/* Col 3 */}
-          <div className="footer-col">
-            <h5 className="footer-col-header font-head">Social</h5>
-            <div className="socials-list font-sans">
-              <a href="#" className="social-link-item">
-                <GlobeIcon />
-                <p>Twitter</p>
-              </a>
-              <a href="#" className="social-link-item">
-                <CodeXmlIcon />
-                <p>GitHub</p>
-              </a>
-              <a href="#" className="social-link-item">
-                <MessageCircleIcon />
-                <p>Discord</p>
-              </a>
-            </div>
-          </div>
+          {/* Retro Password secure box (Top Right-Center) */}
+          <DraggableElement className="retro-elements retro-password-box">
+            <span className="pw-dots">● ● ●</span>
+            <span className="pw-pipe">|</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="pw-lock">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </DraggableElement>
+
+          {/* Retro ENTER key (Mid Right-Bottom) */}
+          <DraggableElement className="retro-elements retro-enter-key">
+            <span className="enter-label">ENTER</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="enter-arrow">
+              <path d="M9 10l-5 5 5 5M4 15h11a4 4 0 0 0 4-4V9" />
+            </svg>
+          </DraggableElement>
+
+          {/* Yellow Warning Triangle (Top Right-Far) */}
+          <DraggableElement className="retro-elements retro-warning-sign">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="warning-icon">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </DraggableElement>
         </div>
 
-        <div className="footer-bottom-bar font-sans">
-          <p>© 2026 DEVFORGE, INC. ALL RIGHTS RESERVED.</p>
-          <p>MIT LICENSE</p>
+        {/* Bottom solid black block */}
+        <div className="footer-black-block">
+          <p className="footer-promo font-sans">
+            READY TO DEPLOY STATIC &amp; DYNAMIC WEB APPS INSTANTLY
+          </p>
+          
+          <div className="footer-brand-title font-head">
+            <span className="brand-underline">Easy</span>Host
+            <span className="version-badge font-sans">v.1.0</span>
+          </div>
+
+          <div className="footer-sub-title font-head">
+            SIMPLE WEB HOSTING
+          </div>
+
+          <div className="footer-line-divider"></div>
+
+          <div className="footer-description font-sans">
+            <p>
+              *EasyHost is a lightweight website hosting platform that simplifies the deployment process, allowing users to host static and dynamic web applications with minimal configuration. It focuses on ease of use, performance, and an intuitive user experience.
+            </p>
+            <p className="secondary-desc">
+              Designed to provide a fast, seamless, and beginner-friendly hosting experience without complicated setup.
+            </p>
+          </div>
+
+          {/* Accessibility Navigation links & Copyright */}
+          <div className="footer-utility-row font-sans">
+            <div className="utility-links">
+              <a href="#features">FEATURES</a>
+              <a href="#developers">DEVELOPERS</a>
+              <a href="#pricing">PRICING</a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer">GITHUB</a>
+            </div>
+            <div className="utility-copyright">
+              © 2026 EASYHOST. ALL RIGHTS RESERVED.
+            </div>
+          </div>
         </div>
       </footer>
     </div>
