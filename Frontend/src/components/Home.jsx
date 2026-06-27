@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Home.scss';
 import brLogo from '../assets/br_logo.png';
+import footerLeftImg from '../assets/footer_left.jpg';
+import footerRightImg from '../assets/footer_right.jpg';
 
 // SVG Icon Helpers
 const ZapIcon = () => (
@@ -552,39 +554,10 @@ const Home = ({ onViewChange }) => {
           </div>
         </section>
 
-        {/* TRUSTED BY SECTION */}
-        <section className="trusted-section">
-          <p className="trusted-title">Trusted by engineering teams at</p>
-          <div className="trusted-grid-border">
-            <div className="trusted-grid">
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/Vercel.svg" alt="Vercel" />
-              </div>
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/Stripe.svg" alt="Stripe" />
-              </div>
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/Linear.svg" alt="Linear" />
-              </div>
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/Fig.svg" alt="Fig" />
-              </div>
-            </div>
-            <div style={{ borderTop: '2px solid var(--foreground)' }}></div>
-            <div className="trusted-grid bottom-row">
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/Supabase.svg" alt="Supabase" />
-              </div>
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/Loom.svg" alt="Loom" />
-              </div>
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/appbot.svg" alt="Appbot" />
-              </div>
-              <div>
-                <img src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/templates/devtool/trust/ramp.svg" alt="Ramp" />
-              </div>
-            </div>
+        {/* HERO BANNER SECTION */}
+        <section className="hero-banner-section">
+          <div className="hero-banner-container">
+            <img src="/hero_img1.png" alt="Deployment is not a joke Banner" className="hero-banner-img" />
           </div>
         </section>
 
@@ -1205,14 +1178,26 @@ const Home = ({ onViewChange }) => {
           <p className="footer-promo font-sans">
             READY TO DEPLOY STATIC &amp; DYNAMIC WEB APPS INSTANTLY
           </p>
-          
-          <div className="footer-brand-title font-head">
-            <span className="brand-underline">Easy</span>Host
-            <span className="version-badge font-sans">v.1.0</span>
-          </div>
 
-          <div className="footer-sub-title font-head">
-            SIMPLE WEB HOSTING
+          <div className="footer-middle-row">
+            <div className="footer-graphic-box left-graphic">
+              <img src={footerLeftImg} alt="Neobrutalist Developer Illustration" />
+            </div>
+
+            <div className="footer-center-content">
+              <div className="footer-brand-title font-head">
+                <span className="brand-underline">Easy</span>Host
+                <span className="version-badge font-sans">v.1.0</span>
+              </div>
+
+              <div className="footer-sub-title font-head">
+                SIMPLE WEB HOSTING
+              </div>
+            </div>
+
+            <div className="footer-graphic-box right-graphic">
+              <img src={footerRightImg} alt="Neobrutalist Email Illustration" />
+            </div>
           </div>
 
           <div className="footer-line-divider"></div>
