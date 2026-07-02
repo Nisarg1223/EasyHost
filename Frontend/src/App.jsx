@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Illustration from './components/Illustration';
-import LoginForm from './components/LoginForm';
-import SignupForm from './components/SignupForm';
+import LoginForm from './app/features/auth/pages/LoginForm';
+import SignupForm from './app/features/auth/pages/SignupForm';
 import Home from './components/Home';
 
 const App = () => {
